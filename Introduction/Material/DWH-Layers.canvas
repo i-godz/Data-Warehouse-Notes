@@ -1,0 +1,17 @@
+{
+	"nodes":[
+		{"id":"0d2c88257e624f9c","type":"file","file":"DWH/Introduction/Material/Core Layer.md","x":320,"y":-108,"width":560,"height":268,"color":"4"},
+		{"id":"d17b73e3ea87b5d9","type":"file","file":"DWH/Introduction/Material/Data Source Layer.md","x":-1040,"y":-108,"width":520,"height":268,"color":"6"},
+		{"id":"5e4f4a2c731508f5","type":"file","file":"DWH/Introduction/Material/Staging Layer.md","x":-360,"y":-108,"width":520,"height":268,"color":"1"},
+		{"id":"3893617b57899923","type":"file","file":"DWH/Introduction/Material/Qlik Sense.png","x":1018,"y":116,"width":304,"height":89,"color":"#282a36"},
+		{"id":"7ace5a8522947daa","type":"file","file":"DWH/Introduction/Material/Tableau-Logo.png","x":1018,"y":-20,"width":421,"height":93,"color":"#282a36"},
+		{"id":"bd96fd344fac5b01","type":"file","file":"DWH/Introduction/Material/Power BI.svg","x":1018,"y":-200,"width":132,"height":132,"color":"#282a36"}
+	],
+	"edges":[
+		{"id":"dd9ebc25663cc47e","fromNode":"d17b73e3ea87b5d9","fromSide":"right","toNode":"5e4f4a2c731508f5","toSide":"left"},
+		{"id":"54e3df1475d10101","fromNode":"5e4f4a2c731508f5","fromSide":"right","toNode":"0d2c88257e624f9c","toSide":"left"},
+		{"id":"196928a1cbdb5c9a","fromNode":"0d2c88257e624f9c","fromSide":"right","toNode":"bd96fd344fac5b01","toSide":"left"},
+		{"id":"8c573154ef4782ee","fromNode":"0d2c88257e624f9c","fromSide":"right","toNode":"7ace5a8522947daa","toSide":"left"},
+		{"id":"b0c4c67d46f3699e","fromNode":"0d2c88257e624f9c","fromSide":"right","toNode":"3893617b57899923","toSide":"left"}
+	]
+}

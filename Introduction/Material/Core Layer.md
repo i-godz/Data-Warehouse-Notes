@@ -1,0 +1,2 @@
+- This layer stores the integrated and transformed data in a structured format optimized for querying and analysis.
+- Data in this layer is often stored in a star schema or snowflake schema, facilitating efficient querying and reporting.

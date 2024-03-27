@@ -1,0 +1,2 @@
+- In this layer, data from different source systems is collected, cleaned, transformed, and stored in a staging area.
+- Staging helps in data validation, error handling, and ensuring data integrity before loading into the data warehouse.
