@@ -6,23 +6,26 @@
 ## Types of Data Modeling 
 
 ### Conceptual
+
 ![[conceptual-data-modeling.png]]
 
 - Defines ==what== the system contains.
-- Focus on business concepts and rules.
-- Represent entities and their relationships.
+- Represents a high-level and abstract understanding of business concepts.
+- Focus on entities and their relationships without getting into technical details.
 
 ### Logical 
+
 ![[logical-data-modeling.png]]
 
 - Defines ==how== the system should be implemented regardless the DMBS.
-- Less abstract.
-- Focus on the technical mapping of rules and data structures.
+- Less abstract, translate the conceptual model into more detailed structure.
+- Focus on the technical mapping of constraints rules and data structures.
 - Involves normalization for data integrity.
 
 ### Physical 
+
 ![[physical-data-modeling.png]]
 
 - Defines ==how== the system should be implemented using specific DMBS.
 - Least abstract.
-- Represent tables, columns, indexes and other database specific structure.
+- Represent tables, columns, indexes, data types, indexes and other database specific structure.

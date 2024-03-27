@@ -2,13 +2,13 @@
 - Methods used in data warehouse to organize the data in a way that is optimized for querying and analysis.
   
  ### Steps in Dimensional Modeling
- - Gather requirement's (usability, performance)
- - Identify ==Granularity== 
+ - Gather business requirement's (usability, performance)
+ - Identify Granularity 
  - Identify Facts
  - Identify Dimensions 
  
  #### What is Granularity?
- - The level of grain at which data is collected and reported.
+ - The level of detail at which data is collected and reported.
  - The grain determines what a single row will represent in the fact table.
  - Grains is not always time/date.
  - Designed from the lowest possible grain (علشان لما يبقي قليل هتبقي سهل توصل للاعلي منه لكن العكس لا)
@@ -32,17 +32,21 @@
 - Contains detailed data at the most granular level.
 - Each record represents a transaction.
 - Continuously updated in real-time as new transactions occur.
-- High data volume.
+- Stores high data volume.
 #### 2.1- Periodic 
 - Records measurements at regular time intervals either on daily, weekly or monthly basis.
 - Each record represent the aggregated metric for that period.
 - Updated periodically at the end of each reporting period.
-- Low data volume.
+- Stores low data volume.
 #### 3.1- Accumulating 
-- Record a running total of metrics to track commutative measurement like year-to-date totals.
+- Record a running total of metrics to track commutative measurement like year-to-date, month-to-date, quarter-to-date totals.
 - Each record represents the total from the beginning of time to that snapshot date.
 - Updated incrementally as new transactions occur or new data becomes available.
-- Historical data.
+- Stores historical data.
+#### 3.4 Factless 
+- Unlike other fact tables, a factless fact table does not contain any quantitative metrics or measures.
+- Instead of numerical data, it captures events, occurrences, or relationships between different dimensions.
+- Common examples include tracking events such as customer interactions, website clicks, student enrollments, or product relationships (e.g., which products are often purchased together).
 
 ### 2- Facts Columns
 #### 2.1- Additive 
