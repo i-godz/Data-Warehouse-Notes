@@ -35,7 +35,7 @@ Topics covered in this section are: <br>
 • Types of Dimensions. <br>
 • Dimension Modeling Schema (Star, Snowflake, Galaxy , Multidimensional Model). <br>
 
-# 3- Material Reference
+# 3- Resource Material 
 
 I've utilized various resources, including:<br>
 
