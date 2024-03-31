@@ -8,7 +8,7 @@
  - Identify Dimensions 
  
  #### What is Granularity?
- - The level of detail at which data is collected and reported.
+ - The level of detail at which data is collected and reported (Level of grain الي عايزين نحطه فكل record)
  - The grain determines what a single row will represent in the fact table.
  - Grains is not always time/date.
  - Designed from the lowest possible grain (علشان لما يبقي قليل هتبقي سهل توصل للاعلي منه لكن العكس لا)
@@ -21,7 +21,7 @@
  - Can be aggregated.
 #### 2- Dimension Table
 - Contains dimension of a fact and business reference data.
-- ==Quantitative== data (category, period, country, product)
+- ==Quantitative== data (category, period, country, product).
 - Cant be aggregated.
 #### 3- Attributes 
 - Characteristic's of the dimension.
@@ -76,12 +76,136 @@
 ## Types of Dimensions
 
 ### 1- Conformed 
-- Constant and shared across multiple fact tables.
-- Example: customer dimension can be used in orders_fact and customer_service_fact .
+[![click to zoom](https://byobi.wordpress.com/wp-content/uploads/2021/05/779d9-multiple-star-schemas-03.png?w=300&h=147)
+- Constant and shared across multiple fact tables and has the same meaning.
+- Example:  Date as a key, product id as a key.
+### 2- Degenerate
+ 
+![[Screenshot 2024-03-28 at 9.58.22 AM.png]]
+
+- It refers to a data attribute that functions as a primary key in a fact table but lacks other descriptive attributes.
+- Instead of being in its own table, it exists as a reference within the fact table.
+### 3- Junk
+
+![[Screenshot 2024-03-28 at 10.16.10 AM.png]]
+
+- Contains a collection of random, low cardinality attributes that are unrelated to any fact table 
+- They don't directly contribute to the facts being analyzed.
+- Attributes like gender (M/F), status flag (active/inactive), or order status (pending/shipped/delivered).
+- These attributes are grouped together to prevent creating fragmented dimensions, which can complicate analysis.
+### 4- Role-Playing 
+
+![[Screenshot 2024-03-28 at 10.26.28 AM.png]]
+
+- One dimension is utilized in different contexts, each with its own description or role.
+- A date dimension can serve as both order date and shipment date.
+-  Instead of creating separate dimensions for each role, this approach minimizes duplication and simplifies the model.
+- Different roles are distinguished using aliases to clarify their specific usage.
+### 5- Outrigger 
+
+![](https://i.imgur.com/KDfHoH5.png)
+
+- A dimension which has a reference to another dimension table.
+- The secondary dimension called outrigger dimension.
+- Should be used ==carefully in limited cases==.
+### 6- Shrunken Roll
+
+![dPA43vE.png](https://i.imgur.com/dPA43vE.png)
+
+- Subset of a larger, more granular dimension used for aggregating fact tables.
+- High level of summary (زي اني اجيب توتال المبيعات عمستوي المدينة).
+- Improve query performance by reducing the size of the dimension tables joined to the fact table.
+### 7- Multi-valued 
+- Has multiple values associated with a single record in the fact table.
+- When the dimension has lower granularity than the fact.
+- Sales order fact may be linked to multiple sales representatives or products.
+- ==Bridge table== is used to handle the ==many-to-many relationship's== where it contains the foreign key of each dimension.
+#### Example Tables:
+
+![](https://i.imgur.com/3kzHjz4.png)
+
+#### Output:
+##### Implementation-1:
+
+![](https://i.imgur.com/HJuIoFq.png)
+##### Implementation-2:
+- This implementation has solved the weighting but still has duplicates.
+  
+![](https://i.imgur.com/EjcaCHK.png)
+##### Implementation-3:
+
+![](https://i.imgur.com/sOc9rXb.png)
+
+### 8- Slowly Changing
+- Attribute values changes less frequently (زي العنوان لو نقلت سكن لازم يتغير).
+#### Types of Handling:
+- There are more types more than type-4 but they will be and abstract combination of type-1, type-2, type-3 like type-4.
+##### Type-0:
+
+![](https://i.imgur.com/pSuuxG6.png)
+
+- Fixed Dimension.
+- We don't change the current even the source changes.
+##### Type-1: 
+
+![](https://i.imgur.com/fU0mzbY.png)
+
+- No History.
+- No history is maintained, only the latest replaces the current.
+##### Type-2: 
+
+![](https://i.imgur.com/hPiFT3l.png)
+
+- History is maintained.
+- Series of history of records are maintained.
+- Instead of making the TerminationDt NULL we can add infinite date to filter date more easily.
+##### Type-3: 
+
+![](https://i.imgur.com/HdvR4kd.png)
+
+- Hybrid between type-1 and type-2.
+- Only the last change and the latest new change is stored.
+##### Type-4: 
+
+![](https://i.imgur.com/RpPZeMT.png)
+
+- Most commonly used.
+- Splitting the data into two tables, first the current record and the second is the historical.
+### 9- Fast Changing
+- Attributes values changing rapidly.
+#### Implementation:
+
+![o8bT01W.png](https://i.imgur.com/o8bT01W.png)
+
+- Identify the fast changing columns, this includes weight and blood pressure.
+- Then create a junk dimension that stores the qualitative data with the fast changing columns.
 
 
+![](https://i.imgur.com/x9LCBnL.png)
 
+- Then create the mini dimension to map the relation between the tables.
+- To get the start_date and end_date we can use the LEAD and LAG analytical functions in SQL. 
+### 10- Heterogeneous
+- This type works when we have a case that a company selling different product to the same base of customer. Every product has it different attributes.
+- One famous example of this type assume an insurance company has two types of product like health and car. In this case Car insurance has different attributes than the health insurance.
 
+![](https://i.imgur.com/QULJCsL.png)
+
+### 11- Swappable 
+- Dimension that has multiple alternative versions of itself that can be swapped at query time.
+- Has different meaning, structure
+
+![](https://i.imgur.com/euGU8yD.png)
+
+#### Implementation:
+- Direct join between Fact and Dimension with filter based on PartyType (run-time ). In this case Party includes some empty columns based on the type.
+##### Logical views:
+- Each view has its own number of columns and rows based on the type details.
+- Pros: Easy for (managing, implementation) with consistent views.
+- Cons: Performance and manage the authorization per view.   
+##### Physical tables (Types & Sub-types):
+- Pros: Performance, better design.
+- Cons: Data redundancy, key could be duplicated (when join with fact), increase in data size, and ETL headache.
 ## Dimension Modeling Schema
 
 ### 1- Star 
@@ -109,5 +233,32 @@
 - Low performance due to many joins.
 -  Low data redundancy.
 - Low disk storage.
+### 4- Multidimensional Model
 
+![](https://i.imgur.com/cGmVS54.png)
 
+- Consists of cells, ==Sparse== cubes has many empty cells and Dense ==has== few empty cells.
+- Data cubes represents data in terms of dimension of facts.
+- Each cell has aggregated data.
+- Stores huge amount of data in a simplified way to increase efficiency. 
+- Cubes has 4-12 dimension, but only 2-3 dimensions can be viewed.
+
+#### Multidimensional Model Operations:
+##### 1- Rollup:
+- Summarizing or aggregating the dimensions from lower level to higher level.
+- less detailed, more summarized view leading to reduce the grain.
+  
+![](https://i.imgur.com/ec6zK3J.png)
+##### 2-Drill-down:
+- Expands the data from higher level to lower level to view detailed information.
+- Increase granularity.
+
+![](https://i.imgur.com/LoKqc2P.png)
+##### 3- Slice:
+- Subset of cube from a single dimension.
+
+![](https://i.imgur.com/aJxbytU.png)
+##### 4- Dice:
+- Subset of cube from multiple dimensions
+
+![](https://i.imgur.com/xO6iIz1.png)

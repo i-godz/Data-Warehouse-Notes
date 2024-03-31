@@ -29,3 +29,31 @@
 - Defines ==how== the system should be implemented using specific DMBS.
 - Least abstract.
 - Represent tables, columns, indexes, data types, indexes and other database specific structure.
+
+## Surrogate vs Natural Key:
+
+| Metric              | Surrogate                      | Natural                        |
+| ------------------- | ------------------------------ | ------------------------------ |
+| Unique              | Yes                            | Yes                            |
+| Name                | Artificial, System generated   | Business key                   |
+| Business Meaning    | Doesnt have a business meaning | has a business meaning         |
+| Conceptual Relation | Doesn't relate                 | Part of conceptual design      |
+| Creation            | System                         | Set of column(s) from the data |
+### Surrogate or Natural Key:
+#### Natural 
+##### Pros:
+- Key has a business meaning.
+- No extra space or computation needed.
+##### Cons:
+- Could change over time.
+- Difficult for maintenance.
+#### Surrogate
+##### Pros:
+- Stable.
+- Easy to maintain.
+- Less disk I/O is required.
+- Guaranteed to be unique.
+- Simple key structure.
+##### Cons:
+- Has no business meaning.
+- Extra column is included in the data.
