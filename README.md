@@ -39,13 +39,13 @@ Topics covered in this section are: <br>
 
 I've utilized various resources, including:<br>
 
-## 3.1. Garage Education
+### 3.1. Garage Education
 • Youtube channal link: https://www.youtube.com/playlist?list=PLxNoJq6k39G_m6DYjpz-V92DkaQEiXxkF
 
-## 3.2.  Nikolai Schuler
+### 3.2.  Nikolai Schuler
 • Udemy course link: https://www.udemy.com/course/data-warehouse-the-ultimate-guide/
 
-## 3.3. The Data Warehouse Toolkit
+### 3.3. The Data Warehouse Toolkit
 • Hard Copy Purchase link: https://printige.net/product/the-data-warehouse-toolkit/ <br>
 • PDF link: https://drive.google.com/file/d/1AFVr3nGVRsxTJKjv9h7ztyUede3StFAR/view?usp=sharing
 
